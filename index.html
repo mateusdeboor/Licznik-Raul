@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Licznik czasu</title>
+
+<style>
+body{
+font-family:Arial;
+text-align:center;
+margin-top:100px;
+background:#111;
+color:white;
+}
+
+h1{
+font-size:40px;
+}
+
+.timer{
+font-size:28px;
+margin:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Czas od 1 lipca 2025</h1>
+
+<div class="timer" id="years"></div>
+<div class="timer" id="months"></div>
+<div class="timer" id="weeks"></div>
+<div class="timer" id="days"></div>
+<div class="timer" id="hours"></div>
+<div class="timer" id="minutes"></div>
+<div class="timer" id="seconds"></div>
+
+<script>
+
+const startDate = new Date("2025-07-01T00:00:00");
+
+function updateTime(){
+
+const now = new Date();
+
+let diff = now - startDate;
+
+let seconds = Math.floor(diff/1000);
+let minutes = Math.floor(seconds/60);
+let hours = Math.floor(minutes/60);
+let days = Math.floor(hours/24);
+let weeks = Math.floor(days/7);
+let months = Math.floor(days/30.44);
+let years = Math.floor(days/365.25);
+
+document.getElementById("years").innerText = "Lata: " + years;
+document.getElementById("months").innerText = "Miesiące: " + months;
+document.getElementById("weeks").innerText = "Tygodnie: " + weeks;
+document.getElementById("days").innerText = "Dni: " + days;
+document.getElementById("hours").innerText = "Godziny: " + hours;
+document.getElementById("minutes").innerText = "Minuty: " + minutes;
+document.getElementById("seconds").innerText = "Sekundy: " + seconds;
+
+}
+
+setInterval(updateTime,1000);
+
+</script>
+
+</body>
+</html>
