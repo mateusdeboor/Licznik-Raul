@@ -2,70 +2,128 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Licznik czasu</title>
+<title>Licznik</title>
 
 <style>
+
 body{
 font-family:Arial;
-text-align:center;
-margin-top:100px;
-background:#111;
+background:#0f0f0f;
 color:white;
+text-align:center;
+padding-top:80px;
 }
 
 h1{
-font-size:40px;
+font-size:38px;
+margin-bottom:40px;
 }
 
-.timer{
-font-size:28px;
-margin:10px;
+.grid{
+display:grid;
+grid-template-columns:repeat(2,150px);
+gap:20px;
+justify-content:center;
 }
+
+.box{
+background:#1c1c1c;
+padding:20px;
+border-radius:12px;
+}
+
+.number{
+font-size:36px;
+font-weight:bold;
+}
+
+.label{
+font-size:14px;
+color:#aaa;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>Czas od 1 lipca 2025</h1>
+<h1>Raúl jest bezrobotny od:</h1>
 
-<div class="timer" id="years"></div>
-<div class="timer" id="months"></div>
-<div class="timer" id="weeks"></div>
-<div class="timer" id="days"></div>
-<div class="timer" id="hours"></div>
-<div class="timer" id="minutes"></div>
-<div class="timer" id="seconds"></div>
+<div class="grid">
+
+<div class="box">
+<div class="number" id="years">0</div>
+<div class="label">LAT</div>
+</div>
+
+<div class="box">
+<div class="number" id="months">0</div>
+<div class="label">MIESIĘCY</div>
+</div>
+
+<div class="box">
+<div class="number" id="weeks">0</div>
+<div class="label">TYGODNI</div>
+</div>
+
+<div class="box">
+<div class="number" id="days">0</div>
+<div class="label">DNI</div>
+</div>
+
+<div class="box">
+<div class="number" id="hours">00</div>
+<div class="label">GODZIN</div>
+</div>
+
+<div class="box">
+<div class="number" id="minutes">00</div>
+<div class="label">MINUT</div>
+</div>
+
+<div class="box">
+<div class="number" id="seconds">00</div>
+<div class="label">SEKUND</div>
+</div>
+
+</div>
 
 <script>
 
 const startDate = new Date("2025-07-01T00:00:00");
 
-function updateTime(){
+function update(){
 
 const now = new Date();
 
-let diff = now - startDate;
+let totalSeconds = Math.floor((now - startDate)/1000);
 
-let seconds = Math.floor(diff/1000);
-let minutes = Math.floor(seconds/60);
-let hours = Math.floor(minutes/60);
-let days = Math.floor(hours/24);
-let weeks = Math.floor(days/7);
-let months = Math.floor(days/30.44);
-let years = Math.floor(days/365.25);
+let seconds = totalSeconds % 60;
+let minutes = Math.floor(totalSeconds/60) % 60;
+let hours = Math.floor(totalSeconds/3600) % 24;
 
-document.getElementById("years").innerText = "Lata: " + years;
-document.getElementById("months").innerText = "Miesiące: " + months;
-document.getElementById("weeks").innerText = "Tygodnie: " + weeks;
-document.getElementById("days").innerText = "Dni: " + days;
-document.getElementById("hours").innerText = "Godziny: " + hours;
-document.getElementById("minutes").innerText = "Minuty: " + minutes;
-document.getElementById("seconds").innerText = "Sekundy: " + seconds;
+let totalDays = Math.floor(totalSeconds/86400);
+
+let years = Math.floor(totalDays / 365);
+let months = Math.floor((totalDays % 365) / 30);
+let weeks = Math.floor((totalDays % 30) / 7);
+let days = totalDays % 7;
+
+document.getElementById("years").textContent = years;
+document.getElementById("months").textContent = months;
+document.getElementById("weeks").textContent = weeks;
+document.getElementById("days").textContent = days;
+
+document.getElementById("hours").textContent = String(hours).padStart(2,"0");
+document.getElementById("minutes").textContent = String(minutes).padStart(2,"0");
+document.getElementById("seconds").textContent = String(seconds).padStart(2,"0");
 
 }
 
-setInterval(updateTime,1000);
+setInterval(update,1000);
+
+update();
 
 </script>
 
